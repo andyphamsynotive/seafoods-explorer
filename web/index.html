@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Seafood Trade AI</title>
+</head>
+<body>
+  <h2>Hỏi dữ liệu xuất khẩu cá tra</h2>
+  <input type="text" id="query" placeholder="Ví dụ: Các tờ khai đi Nhật tháng 7/2021">
+  <button onclick="ask()">Hỏi</button>
+  <pre id="result"></pre>
+
+  <script>
+    async function ask() {
+      const q = document.getElementById('query').value;
+      const res = await fetch(`/ask?q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
