@@ -1,6 +1,7 @@
+langchain
+langchain-community
+langchain-openai
+openai
 fastapi
 uvicorn
-langchain
-openai
 sqlalchemy
-langchain-community
