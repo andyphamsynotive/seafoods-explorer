@@ -12,17 +12,21 @@ import os
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="web"), name="static")
 
-# Kết nối SQLite database
+# === Đọc API key từ biến môi trường ===
+api_key = os.environ.get("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("❌ Biến môi trường OPENAI_API_KEY chưa được thiết lập!")
+
+# === Kết nối SQLite DB ===
 db = SQLDatabase.from_uri("sqlite:///to_khai.db")
 
-# Cấu hình LLM (dùng GPT-4 qua OpenAI API)
+# === Khởi tạo mô hình GPT-4 từ langchain_openai ===
 llm = ChatOpenAI(
     temperature=0,
     model="gpt-4",
-    openai_api_key=os.getenv("OPENAI_API_KEY")
+    api_key=api_key  # ✅ key truyền trực tiếp
 )
 
-# Dùng SQL Toolkit để kết hợp với database
 toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 agent_executor = create_sql_agent(llm=llm, toolkit=toolkit, verbose=True)
 
