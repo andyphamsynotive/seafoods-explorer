@@ -1,6 +1,6 @@
-
 fastapi
 uvicorn
 langchain
 openai
 sqlalchemy
+langchain-community
